@@ -1,0 +1,15 @@
+{
+  "name": "homework-01",
+  "version": "0.0.1",
+  "description": "homework-01",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aleksey Dovbnya",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.19.0",
+    "del": "^3.0.0"
+  }
+}
