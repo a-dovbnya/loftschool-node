@@ -1,5 +1,5 @@
 const yargs = require("yargs");
-var commander = require("commander");
+const commander = require("commander");
 const fs = require("fs");
 const path = require("path");
 const del = require("del");
