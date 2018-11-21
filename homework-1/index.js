@@ -6,12 +6,33 @@ const Observable = require("./libs/observer");
 
 commander
   .version("0.0.1")
-  .option("-e, --entry [opt]", "The path of the source directory")
+  .option("-e, --entry <req>", "The path of the source directory")
   .option("-o, --output [opt]", "The path of the output directory")
   .option("-D, --delete", "Delete source directory")
   .parse(process.argv);
 
-const entry = commander.entry || "./files";
+process.on("exit", code => {
+  switch (code) {
+    case 400:
+      console.error("parameter --entry is required (see help) \n");
+      commander.outputHelp();
+      break;
+    case 500:
+      console.error("Directory read failed");
+      break;
+    case 404:
+      console.error("Directory is clear.");
+      break;
+    default:
+      break;
+  }
+});
+
+if (!commander.entry) {
+  process.exit(400);
+}
+
+const entry = commander.entry;
 const outputDir = commander.output || "./output";
 const removeFolder = commander.delete;
 
@@ -72,16 +93,3 @@ const filesOrder = src => {
 getDirectory(targetDir);
 filesOrder(sourceDir);
 observable.start("sorting...");
-
-process.on("exit", code => {
-  switch (code) {
-    case 500:
-      console.error("Directory read failed");
-      break;
-    case 404:
-      console.error("Directory is clear.");
-      break;
-    default:
-      break;
-  }
-});
