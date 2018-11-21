@@ -1,4 +1,3 @@
-const yargs = require("yargs");
 const commander = require("commander");
 const fs = require("fs");
 const path = require("path");
