@@ -48,13 +48,13 @@ const observable = new Observable(() => {
 
 const getDirectory = async dir => {
   if (!fs.existsSync(dir)) {
-    await fs.mkdirSync(dir);
+    fs.mkdirSync(dir);
   }
 };
 
 const copyFile = async (currentFile, newFile) => {
   if (!fs.existsSync(newFile)) {
-    await fs.linkSync(currentFile, newFile);
+    fs.linkSync(currentFile, newFile);
   } else {
     console.log("file is exist");
   }
@@ -71,11 +71,10 @@ const processingFiles = async (src, files) => {
       const dirPath = path.join(targetDir, file[0].toUpperCase());
       const filePath = path.join(dirPath, file);
 
-      getDirectory(dirPath)
-        .then(() => copyFile(currentSrc, filePath));
+      getDirectory(dirPath).then(() => copyFile(currentSrc, filePath));
     }
   });
-}
+};
 
 const filesOrder = src => {
   observable.addObserver(src);
@@ -88,12 +87,10 @@ const filesOrder = src => {
       process.exit(404);
     }
 
-    processingFiles(src, files)
-      .then(() => observable.removeObserver(src));
+    processingFiles(src, files).then(() => observable.removeObserver(src));
   });
 };
 
-getDirectory(targetDir)
-  .then(() => filesOrder(sourceDir));
+getDirectory(targetDir).then(() => filesOrder(sourceDir));
 
 observable.start("sorting...");
