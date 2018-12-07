@@ -1,0 +1,21 @@
+{
+  "name": "homework-4",
+  "version": "0.0.1",
+  "description": "homework-4",
+  "main": "app.js",
+  "author": "Aleksey Dowbnya",
+  "license": "MIT",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "crypto": "^1.0.1",
+    "formidable": "^1.2.1",
+    "koa": "^2.6.2",
+    "koa-body": "^4.0.4",
+    "koa-pug": "^3.0.0-2",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "lowdb": "^1.0.0",
+    "nodemailer": "^4.7.0",
+    "pug": "^2.0.0-rc.4"
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "skills": [
+    {
+      "name": "age",
+      "number": "32",
+      "text": "Возраст начала занятий на скрипке"
+    },
+    {
+      "name": "concerts",
+      "number": "32",
+      "text": "Концертов отыграл"
+    },
+    {
+      "name": "cities",
+      "number": "53",
+      "text": "Максимальное число городов в туре"
+    },
+    {
+      "name": "years",
+      "number": "12",
+      "text": "Лет на сцене в качестве скрипача"
+    }
+  ],
+  "products": [
+    {
+      "src": "./assets/img/products/Work1.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "./assets/img/products/Work2.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "./assets/img/products/Work3.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "./assets/img/products/Work4.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "./assets/img/products/Work5.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "./assets/img/products/Work6.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "./assets/img/products/Work7.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "./assets/img/products/Work8.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "./assets/img/products/Work9.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "upload/Без названия.png",
+      "name": "test",
+      "price": "1000"
+    }
+  ],
+  "admin": {
+    "email": "test@test.ru",
+    "salt": "33338ced69ae2e78e9b9eb5550b455b3",
+    "hash": "bd70e226561b8382e866823a5a807fcbf99fd86043a5ffaeddb426068473fba06d86747a26b3f929db115afc072c227c67148b76a87e19ccc54826eade122219d9c7a92d6c76e33daf1b7b4ce10fda7fefbd984844218b14d58c7f11967532afef3747d8e37e9d3a1f57dc31e5e759db03b225857fb6a0cd7982e806cdadca7c432751aae26cc504e8398248669feab043c9d8cbce2c067a8367d982a006404a28df0a9d9618e42bfe8ac4e7ce623c8a5dab8e6834e933eaaa54e88003de178c033db0510e86c30d517a4d62a6a972bc7f074fc53f3a082ce36c2093654753800583768ef059223e980c357b787979756ce4417d0c3ac265018f9b327e2d4b20e0464cb83da3b6d30f8392308bd5d960558b2881ef7223e0efa35b5fd79528db3e45a4fdb7b05064ff02a87cd847a08896933fc2b33291888a8eace241a7be961c24591f259c09837583aecab4221bae8d0190ce526be6555d946888de5501fbdf29bfd41eb266fa7c26b38b3e19c953953a3fe9f7ef37b597aaadcb09b6a093140ca4abda523629e354f72e6fbf894f2c1febf74d8faa753f715e0563f6d50db72a75991d3ff681b6607549dda6c18e797f5fa82505aed0e91c36ba2a6b9f545afaf4674fd321efdc9abe5acd86d6c3eac1649962f69066239a28045a17752a49e44e438292029b5f6a93aead5d061bee770c387af66cabb9195058458dcf1b"
+  }
+}
