@@ -1,0 +1,19 @@
+{
+  "name": "homework-3",
+  "version": "0.0.1",
+  "description": "homework-3",
+  "main": "app.js",
+  "author": "Aleksey Dowbnya",
+  "license": "MIT",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "crypto": "^1.0.1",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "formidable": "^1.2.1",
+    "lowdb": "^1.0.0",
+    "nodemailer": "^4.7.0",
+    "pug": "^2.0.0-rc.4"
+  }
+}

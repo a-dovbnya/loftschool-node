@@ -1,0 +1,17 @@
+{
+  "templates": "views",
+  "static": "public",
+  "upload": "upload",
+  "mail": {
+    "subject": "Сообщение с сайта",
+    "smtp": {
+      "host": "smtp.gmail.com",
+      "port": 465,
+      "secure": true,
+      "auth": {
+        "user": "test.site.node.mail@gmail.com",
+        "pass": "pass123pass123"
+      }
+    }
+  }
+}

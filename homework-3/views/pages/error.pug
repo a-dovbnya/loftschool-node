@@ -1,0 +1,15 @@
+extends ../_template
+
+block variables
+  - var title = 'Login page'
+
+block content
+  header.header
+    .container.header__container
+      .header__top
+        a(href="/").title-name Архипов
+          span.title-name__doter .
+        a(href="/").admin-header__link Вернуться на сайт
+      .error-page
+        h1 Произошла ошибка:
+            span= message
