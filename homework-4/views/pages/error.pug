@@ -1,7 +1,7 @@
 extends ../_template
 
 block variables
-  - var title = 'Login page'
+  - var title = 'Error'
 
 block content
   header.header
@@ -12,4 +12,5 @@ block content
         a(href="/").admin-header__link Вернуться на сайт
       .error-page
         h1 Произошла ошибка:
-            span= message
+            span #{status} #{message}
+            
