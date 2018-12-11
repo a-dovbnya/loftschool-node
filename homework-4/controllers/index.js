@@ -3,11 +3,11 @@ const util = require("util");
 const _path = require("path");
 
 const rename = util.promisify(fs.rename);
-const unllink = util.promisify(fs.unlink);
+const unlink = util.promisify(fs.unlink);
 
 const db = require("../models/db");
 const config = require("../config.json");
-validation = require("../libs/uploadValidation");
+const { validation } = require("../libs/uploadValidation");
 
 module.exports.index = async ctx => {
   const data = {
@@ -24,6 +24,29 @@ module.exports.admin = async ctx => {
   ctx.render("pages/admin");
 };
 module.exports.uploadWork = async ctx => {
-  const { name, price } = ctx.request.body;
+  const { productName, productPrice } = ctx.request.body;
+  console.log(ctx.request.files);
   const { name, size, path } = ctx.request.files;
+  const valid = validation(productName, productPrice, name, size);
+  if (!valid.err) {
+    await unlink(path);
+    ctx.body = valid.status;
+  }
+  let fileName = _path.join(process.cwd, "public", "upload", name);
+  const errUpload = await rename(path, fileName);
+  if (errUpload) {
+    return (ctx.body = {
+      mes: "При работе с картинкой произошла ошибка на сервере",
+      status: "Error"
+    });
+  }
+
+  db.get("products")
+    .push({ src: fileName, name: productNam, price: productPrice })
+    .write();
+
+  ctx.body = {
+    mes: "Проект успешно добавлен",
+    status: "OK"
+  };
 };
