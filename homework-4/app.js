@@ -2,7 +2,8 @@ const Koa = require("koa");
 const app = new Koa();
 const Pug = require("koa-pug");
 const static = require("koa-static");
-const flash = require("connect-flash");
+const session = require("koa-session");
+const flash = require("koa-better-flash");
 const fs = require("fs");
 
 const config = require("./config.json");
@@ -27,7 +28,11 @@ app.on("error", (errorHandler, ctx) => {
 });
 const router = require("./routes");
 
-app.use(router.routes()).use(router.allowedMethods());
+app
+  .use(session(config.session, app))
+  .use(flash())
+  .use(router.routes())
+  .use(router.allowedMethods());
 
 app.listen(3000, () => {
   if (!fs.existsSync("./public/upload")) {

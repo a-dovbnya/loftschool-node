@@ -21,18 +21,25 @@ module.exports.login = async ctx => {
   ctx.render("pages/login");
 };
 module.exports.admin = async ctx => {
-  ctx.render("pages/admin");
+  ctx.render("pages/admin", {
+    msgfile: ctx.flash("upload")[0],
+    msgskill: ctx.flash("skills")[0]
+  });
 };
 module.exports.uploadWork = async ctx => {
   const { productName, productPrice } = ctx.request.body;
-  console.log(ctx.request.files);
-  const { name, size, path } = ctx.request.files;
+  const { name, size, path } = ctx.request.files.photo;
   const valid = validation(productName, productPrice, name, size);
-  if (!valid.err) {
+  const photoSrc = _path
+    .join("./upload", name)
+    .split("\\")
+    .join("/");
+
+  if (valid.err) {
     await unlink(path);
     ctx.body = valid.status;
   }
-  let fileName = _path.join(process.cwd, "public", "upload", name);
+  let fileName = _path.join(process.cwd(), "public", "upload", name);
   const errUpload = await rename(path, fileName);
   if (errUpload) {
     return (ctx.body = {
@@ -42,11 +49,16 @@ module.exports.uploadWork = async ctx => {
   }
 
   db.get("products")
-    .push({ src: fileName, name: productNam, price: productPrice })
+    .push({
+      src: photoSrc,
+      name: productName,
+      price: productPrice
+    })
     .write();
-
-  ctx.body = {
+  ctx.flash("upload", "test");
+  ctx.redirect("/admin");
+  /*ctx.body = {
     mes: "Проект успешно добавлен",
     status: "OK"
-  };
+  };*/
 };

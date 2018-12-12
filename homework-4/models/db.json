@@ -66,6 +66,46 @@
       "src": "./assets/img/products/Work9.jpg",
       "name": "Вино вдохновение",
       "price": 600
+    },
+    {
+      "src": "upload/test2.jpg",
+      "name": "asd",
+      "price": "asd"
+    },
+    {
+      "src": "upload/test2.jpg",
+      "name": "asd",
+      "price": "asd"
+    },
+    {
+      "src": "upload/test2.jpg",
+      "name": "sad",
+      "price": "asd"
+    },
+    {
+      "src": "upload/test2.jpg",
+      "name": "asd",
+      "price": "asd"
+    },
+    {
+      "src": "upload/test2.jpg",
+      "name": "asd",
+      "price": "asd"
+    },
+    {
+      "src": "upload/test2.jpg",
+      "name": "sd",
+      "price": "sd"
+    },
+    {
+      "src": "upload/test2.jpg",
+      "name": "sd",
+      "price": "sd"
+    },
+    {
+      "src": "upload/test2.jpg",
+      "name": "s",
+      "price": "s"
     }
   ],
   "admin": {
