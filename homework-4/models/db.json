@@ -2,22 +2,22 @@
   "skills": [
     {
       "name": "age",
-      "number": "34",
+      "number": "40",
       "text": "Возраст начала занятий на скрипке"
     },
     {
       "name": "concerts",
-      "number": "32",
+      "number": "56",
       "text": "Концертов отыграл"
     },
     {
       "name": "cities",
-      "number": "53",
+      "number": "12",
       "text": "Максимальное число городов в туре"
     },
     {
       "name": "years",
-      "number": "12",
+      "number": "18",
       "text": "Лет на сцене в качестве скрипача"
     }
   ],
@@ -66,51 +66,11 @@
       "src": "./assets/img/products/Work9.jpg",
       "name": "Вино вдохновение",
       "price": 600
-    },
-    {
-      "src": "upload/test2.jpg",
-      "name": "asd",
-      "price": "asd"
-    },
-    {
-      "src": "upload/test2.jpg",
-      "name": "asd",
-      "price": "asd"
-    },
-    {
-      "src": "upload/test2.jpg",
-      "name": "sad",
-      "price": "asd"
-    },
-    {
-      "src": "upload/test2.jpg",
-      "name": "asd",
-      "price": "asd"
-    },
-    {
-      "src": "upload/test2.jpg",
-      "name": "asd",
-      "price": "asd"
-    },
-    {
-      "src": "upload/test2.jpg",
-      "name": "sd",
-      "price": "sd"
-    },
-    {
-      "src": "upload/test2.jpg",
-      "name": "sd",
-      "price": "sd"
-    },
-    {
-      "src": "upload/test2.jpg",
-      "name": "s",
-      "price": "s"
     }
   ],
   "admin": {
     "email": "test@test.ru",
-    "salt": "33338ced69ae2e78e9b9eb5550b455b3",
-    "hash": "bd70e226561b8382e866823a5a807fcbf99fd86043a5ffaeddb426068473fba06d86747a26b3f929db115afc072c227c67148b76a87e19ccc54826eade122219d9c7a92d6c76e33daf1b7b4ce10fda7fefbd984844218b14d58c7f11967532afef3747d8e37e9d3a1f57dc31e5e759db03b225857fb6a0cd7982e806cdadca7c432751aae26cc504e8398248669feab043c9d8cbce2c067a8367d982a006404a28df0a9d9618e42bfe8ac4e7ce623c8a5dab8e6834e933eaaa54e88003de178c033db0510e86c30d517a4d62a6a972bc7f074fc53f3a082ce36c2093654753800583768ef059223e980c357b787979756ce4417d0c3ac265018f9b327e2d4b20e0464cb83da3b6d30f8392308bd5d960558b2881ef7223e0efa35b5fd79528db3e45a4fdb7b05064ff02a87cd847a08896933fc2b33291888a8eace241a7be961c24591f259c09837583aecab4221bae8d0190ce526be6555d946888de5501fbdf29bfd41eb266fa7c26b38b3e19c953953a3fe9f7ef37b597aaadcb09b6a093140ca4abda523629e354f72e6fbf894f2c1febf74d8faa753f715e0563f6d50db72a75991d3ff681b6607549dda6c18e797f5fa82505aed0e91c36ba2a6b9f545afaf4674fd321efdc9abe5acd86d6c3eac1649962f69066239a28045a17752a49e44e438292029b5f6a93aead5d061bee770c387af66cabb9195058458dcf1b"
+    "salt": "0261f98f8ecc45f1ba3a93f5a06a3293",
+    "hash": "02e1639b5979494f6d415506233b89e03d23859869a0e0e7bd53cd7579d062af043362515c92a87dccedaacfe79269debf0551d36b338290da0c04d0d4afa1ca8b8a9b980d5935f9a23484140b0aa4c6a07a82d5841aef0c2b60b3e303c20be6a921c48c8d9d2c4a8a479f1eca9442fa6efd327334943234a41e40669656579cdeff6b45dc969cb1c252149f32011b3f1093176d41bc50b002530662eb5358d4fffaac58a3b4a55c0be8329b0122e49567674adf41ef80558c40265f249ac9c46554c34d706150263cf47e2466e3f825dc6319f69ac8b323006d1660c815aa355b09360a1c03246a5f535ef660dcab1df7a96cf1565cc11c243f0c16f159e2bfba96d29c58fb0c2f3ed730f79b18ee79ba5577f9647bc647dbd0479ab36331e997649335ff70946c0c91ecd0caa2c4473242a004ef774f6c56f90f25ce508a3c4f714f0ac2056de1feba1159bec5e77a0594584f5755676fed4e5798693767d83485767ac55d349957cfce33386ba2b2829c2de7a122923601075ba99f42b56e214305855e631523b43bfc6bba17eee36e96594242cf1ddbbaed75a70dde8e29f4824308813241cd59002afa28ddfa1da55dbf44858f8585a47abb2423ae6fad6b1352de1c319ec86088619cc5cb8453c9c90e97f3a0b8cd8327d0d74ba53a833cd761975f5eb02a73dd3f1da978ce8e35f98ee27b984dd4a52c27174751e6c3"
   }
 }

@@ -1,23 +1,20 @@
 const nodemailer = require("nodemailer");
 const config = require("../config.json");
 
-module.exports.sendEmail = req =>
+module.exports.sendEmail = (name, email, message) =>
   new Promise((resolve, reject) => {
-    console.log("send mail is starting");
+    if (!name && !email && !message) {
+      return reject(new Error("Неоходимо заполнить все поля!"));
+    }
     const mailOptions = {
-      from: `${req.body.name} <${req.body.email}>`,
+      from: `${name} <${email}>`,
       to: config.mail.smtp.auth.user,
       subject: config.mail.subject,
-      text:
-        req.body.message.trim().slice(0, 500) +
-        `\n Отправлено с: <${req.body.email}>`
+      text: message.trim().slice(0, 500) + `\n Отправлено с: <${email}>`
     };
 
     const transporter = nodemailer.createTransport(config.mail.smtp);
-    console.log("config = ", config);
-    console.log("mailOptions = ", mailOptions);
     transporter.sendMail(mailOptions, (error, info) => {
-      console.log("callback");
       if (error) {
         return reject(error);
       }

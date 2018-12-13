@@ -1,8 +1,7 @@
 const crypto = require("crypto");
 const db = require("../models/db.js");
 
-module.exports.auth = body => {
-  const { email, password } = body;
+module.exports.auth = (email, password) => {
   const admin = db.get("admin").value();
   const salt = admin.salt;
   const hash = crypto

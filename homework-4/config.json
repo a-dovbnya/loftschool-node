@@ -1,7 +1,7 @@
 {
   "session": {
     "key": "koa:sess",
-    "maxAge": "session",
+    "maxAge": 600000,
     "overwrite": true,
     "httpOnly": true,
     "signed": false,
