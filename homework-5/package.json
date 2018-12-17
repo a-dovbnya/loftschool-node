@@ -1,0 +1,12 @@
+{
+  "name": "MainHomework",
+  "version": "0.0.1",
+  "description": "Main homework",
+  "main": "app.js",
+  "author": "Dovbnya Aleksey",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.4.0"
+  }
+}
