@@ -1,12 +1,47 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const passport = require("passport");
+const mongoose = require("mongoose");
+const MongoStore = require("connect-mongo")(session);
+
 const router = require("./routes/api/v1.0/");
 const app = express();
 const path = require("path");
 
+// connection db
+//require("./models");
+
+//app.use(cookieParser());
+/* app.use(
+  session({
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    secret: "kye-secret",
+    key: "session-key",
+    cookie: {
+      path: "/",
+      httpOnly: true,
+      maxAge: 30 * 60 * 1000
+    },
+    saveUninitialized: false,
+    resave: true,
+    ephemeral: true,
+    rolling: true
+  })
+);
+
+require("./config/config-passport"); */
+
+// static
 app.use(express.static(path.join(__dirname, "dist")));
 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+/* app.use(express.urlencoded({ extended: false }));
+app.use(express.json()); */
+//app.use(express.json());
+app.use(bodyParser.text());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //app.use("/api/v1.0/", router);
 app.use("/", router);

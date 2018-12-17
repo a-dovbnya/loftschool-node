@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const fs = require("fs");
 //const db = require("../../../../models/db");
 
 // mock
@@ -12,12 +13,14 @@ router.get("/", (req, res) => {
 
 router.post("/api/saveNewUser", (req, res) => {
   //создание нового пользователя (регистрация). Необходимо вернуть объект созданного пользователя.
-  res.json(register);
+  //console.log(JSON.parse(req.body));
+  res.status(200).json(register);
 });
 
 router.post("/api/login", (req, res) => {
   //авторизация после пользователького ввода. Необходимо вернуть объект авторизовавшегося пользователя.
-  res.json(auth);
+  //console.log(JSON.parse(req.body));
+  res.status(200).json(auth);
 });
 
 router.post("/api/authFromToken", (req, res) => {
