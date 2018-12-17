@@ -12,7 +12,7 @@ const app = express();
 const path = require("path");
 
 // connection db
-//require("./models");
+require("./models");
 
 //app.use(cookieParser());
 /* app.use(

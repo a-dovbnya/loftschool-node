@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+/* const mongoose = require("mongoose");
 const Cats = require("./schema");
 
 const isNotValid = data => {
@@ -50,3 +50,4 @@ module.exports.update = function(data, paramsId) {
 module.exports.delete = function(paramsId) {
   return Cats.findByIdAndRemove({ _id: paramsId });
 };
+*/

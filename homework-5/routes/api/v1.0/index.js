@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
+const userController = require("../../../controllers/user.js");
 //const db = require("../../../../models/db");
 
 // mock
@@ -11,21 +11,9 @@ router.get("/", (req, res) => {
   res.render("dist");
 });
 
-router.post("/api/saveNewUser", (req, res) => {
-  //создание нового пользователя (регистрация). Необходимо вернуть объект созданного пользователя.
-  //console.log(JSON.parse(req.body));
-  res.status(200).json(register);
-});
-
-router.post("/api/login", (req, res) => {
-  //авторизация после пользователького ввода. Необходимо вернуть объект авторизовавшегося пользователя.
-  //console.log(JSON.parse(req.body));
-  res.status(200).json(auth);
-});
-
-router.post("/api/authFromToken", (req, res) => {
-  //авторизация при наличии токена. Необходимо вернуть объект авторизовавшегося пользователя.
-});
+router.post("/api/saveNewUser", userController.saveNewUser);
+router.post("/api/login", userController.login);
+router.post("/api/authFromToken", userController.authFromToken);
 
 router.put("/api/updateUser/:id", (req, res) => {
   //обновление информации о пользователе. Необходимо вернуть объект обновленного пользователя.
