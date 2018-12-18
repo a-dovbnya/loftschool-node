@@ -12,7 +12,7 @@ const app = express();
 const path = require("path");
 
 // connection db
-require("./models");
+//require("./models");
 
 //app.use(cookieParser());
 /* app.use(
@@ -32,7 +32,19 @@ require("./models");
   })
 );
 
+
 require("./config/config-passport"); */
+
+/* function rawBody(req, res, next) {
+  req.setEncoding("utf8");
+  req.rawBody = "";
+  req.on("data", function(chunk) {
+    req.rawBody += chunk;
+  });
+  req.on("end", function() {
+    next();
+  });
+} */
 
 // static
 app.use(express.static(path.join(__dirname, "dist")));
@@ -44,6 +56,8 @@ app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //app.use("/api/v1.0/", router);
+require("./models");
+require("./config/config-passport");
 app.use("/", router);
 
 app.use((req, res, next) => {
