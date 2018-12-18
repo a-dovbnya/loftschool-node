@@ -3,6 +3,11 @@ const router = express.Router();
 const userController = require("../../../controllers/user.js");
 //const db = require("../../../../models/db");
 
+const passport = require("passport");
+const authJwt = passport.authenticate("jwt", { session: false }, () => {
+  console.log("jwt");
+});
+
 // mock
 const { auth, register, getNews } = require("../../../mock");
 
@@ -27,8 +32,9 @@ router.post("/api/saveUserImage/:id", (req, res) => {
   //сохранение изображения пользователя. Необходимо вернуть объект со свойством path, которое хранит путь до сохраненного изображения
 });
 
-router.get("/api/getNews", (req, res) => {
+router.get("/api/getNews", authJwt, (req, res) => {
   //получение списка новостей. Необходимо вернуть список всех новостей из базы данных.
+  console.log("req.isAuthenticated() = ", req.isAuthenticated());
   res.json(getNews);
 });
 

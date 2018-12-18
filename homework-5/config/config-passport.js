@@ -2,7 +2,6 @@ const passport = require("passport");
 const passportJWT = require("passport-jwt");
 const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
-//require("../models/user");
 const User = mongoose.model("User");
 const secret = require("./config.json").secret;
 
@@ -10,21 +9,21 @@ const ExtractJWT = passportJWT.ExtractJwt;
 const Strategy = passportJWT.Strategy;
 const params = {
   secretOrKey: secret,
-  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
-  /* jwtFromRequest: req => {
-    console.log("req = ", req);
-    return null;
-  } */
+  //jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+  jwtFromRequest: function(req) {
+    console.log("extractor = ");
+    var token = null;
+    if (req && req.cookies) {
+      token = req.cookies["jwt"];
+    }
+    return token;
+  }
 };
 
 passport.use(
   new LocalStrategy(function(username, password, done) {
-    console.log("username1 = ", username);
-    console.log("password1 = ", password);
-    //req.body = JSON.parse(req.body);
     User.findOne({ username })
       .then(user => {
-        console.log("user = ", user);
         if (!user) {
           return done(null, false);
         }
@@ -39,9 +38,10 @@ passport.use(
 
 passport.use(
   new Strategy(params, function(payload, done) {
-    console.log("passport strategy");
+    console.log("passport strategy = ", payload);
     User.find({ id: payload.id })
       .then(user => {
+        console.log("user = ", user);
         if (!user) {
           return done(new Error("User not found"));
         }

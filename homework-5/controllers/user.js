@@ -9,7 +9,7 @@ const secret = require("../config/config.json").secret;
 
 module.exports = {
   saveNewUser: async (req, res) => {
-    const data = JSON.parse(req.body);
+    const data = req.body;
 
     if (!data.username || !data.password) {
       return res
@@ -18,7 +18,6 @@ module.exports = {
     }
     User.findOne({ username: data.username }).then(async user => {
       if (user) {
-        console.log("Такой пользователь уже существует");
         return res
           .status(409)
           .json({ error: "Такой пользователь уже существует" });
@@ -49,27 +48,33 @@ module.exports = {
           return res.status(201).json(user);
         })
         .catch(err => {
-          // Пробрасываем ошибку дальше с помощью next
           return res.status(400).json({ error: "Произошла ошибка" });
         });
     });
   },
   login: (req, res, next) => {
-    /* console.log(req.body);
-    res.status(200).json(auth); */
-    passport.authenticate("local", { session: false }, (err, user, info) => {
+    console.log("body = ", req.body);
+    passport.authenticate("local", (err, user) => {
       if (err) {
         return next(err);
       }
       if (!user) {
         return res.status(400).json({
-          error: `Пользователь с логином ${req.body.username} не существует!!!`
+          error: `Неправильный логин или пароль`
         });
       }
       if (user) {
-        console.log("user = ", user);
+        if (req.body.remembered) {
+          res.cookie("access_token", user.access_token, {
+            httpOnly: false,
+            expires: new Date(Date.now() + 60 * 60 * 24 * 1000),
+            path: "/"
+          });
+        }
+        console.log("req.isAuthenticated() = ", req.isAuthenticated());
+        return res.status(200).json(user);
       }
-    })(req.body, res, next);
+    })(req, res, next);
   },
   authFromToken: (req, res) => {
     console.log(req.body);

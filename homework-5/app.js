@@ -11,6 +11,23 @@ const router = require("./routes/api/v1.0/");
 const app = express();
 const path = require("path");
 
+app.use(cookieParser());
+/*app.use(
+  session({
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    secret: "kye-secret",
+    key: "session-key",
+    cookie: {
+      path: "/",
+      httpOnly: true,
+      maxAge: 30 * 60 * 1000
+    },
+    saveUninitialized: false,
+    resave: true,
+    ephemeral: true,
+    rolling: true
+  })
+);*/
 // connection db
 //require("./models");
 
@@ -35,24 +52,13 @@ const path = require("path");
 
 require("./config/config-passport"); */
 
-/* function rawBody(req, res, next) {
-  req.setEncoding("utf8");
-  req.rawBody = "";
-  req.on("data", function(chunk) {
-    req.rawBody += chunk;
-  });
-  req.on("end", function() {
-    next();
-  });
-} */
-
 // static
+app.use(express.json({ type: "text/plain" }));
 app.use(express.static(path.join(__dirname, "dist")));
-
 /* app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); */
-//app.use(express.json());
-app.use(bodyParser.text());
+//app.use(bodyParser.text());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //app.use("/api/v1.0/", router);

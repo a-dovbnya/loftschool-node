@@ -76,7 +76,7 @@ const userSchema = new Schema({
 };*/
 
 userSchema.methods.validPassword = function(password) {
-  return bCrypt.compareSync(password, this.hash);
+  return bCrypt.compareSync(password, this.password);
 };
 
 module.exports = mongoose.model("User", userSchema);
