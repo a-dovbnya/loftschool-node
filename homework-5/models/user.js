@@ -76,6 +76,7 @@ const userSchema = new Schema({
 };*/
 
 userSchema.methods.validPassword = function(password) {
+  console.log("valid password = ", bCrypt.compareSync(password, this.password));
   return bCrypt.compareSync(password, this.password);
 };
 

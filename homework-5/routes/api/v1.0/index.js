@@ -21,18 +21,20 @@ router.post("/api/saveNewUser", userController.saveNewUser);
 router.post("/api/login", userController.login);
 router.post("/api/authFromToken", userController.authFromToken);
 
-router.put("/api/updateUser/:id", authJwt, (req, res) => {
-  //обновление информации о пользователе. Необходимо вернуть объект обновленного пользователя.
-});
+router.get("/api/getUsers", authJwt, userController.getUsers);
+router.put("/api/updateUser/:id", authJwt, userController.updateUser);
 
 router.delete("/api/deleteUser/:id", authJwt, (req, res) => {
   //удаление пользователя
 });
-
 router.post("/api/saveUserImage/:id", authJwt, (req, res) => {
   //сохранение изображения пользователя. Необходимо вернуть объект со свойством path, которое хранит путь до сохраненного изображения
 });
+router.put("/api/updateUserPermission/:id", authJwt, (req, res) => {
+  //обновление существующей записи о разрешениях конкретного пользователя.
+});
 
+// Новости
 router.get("/api/getNews", authJwt, (req, res, next) => {
   //получение списка новостей. Необходимо вернуть список всех новостей из базы данных.
   getAllNews()
@@ -45,7 +47,6 @@ router.get("/api/getNews", authJwt, (req, res, next) => {
       });
     });
 });
-
 router.post("/api/newNews", authJwt, (req, res, next) => {
   //создание новой новости. Необходимо вернуть обновленный список всех новостей из базы данных.
   const data = req.body;
@@ -69,7 +70,6 @@ router.post("/api/newNews", authJwt, (req, res, next) => {
       });
     });
 });
-
 router.put("/api/updateNews/:id", authJwt, (req, res, next) => {
   //обновление существующей новости. Необходимо вернуть обновленный список всех новостей из базы данных.
   const id = req.params.id;
@@ -90,8 +90,7 @@ router.put("/api/updateNews/:id", authJwt, (req, res, next) => {
       });
     });
 });
-
-router.delete("/api/deleteNews/:id", authJwt, (req, res) => {
+router.delete("/api/deleteNews/:id", authJwt, (req, res, next) => {
   //удаление Новости
   const id = req.params.id;
   News.findOneAndRemove({ id: id })
@@ -107,14 +106,7 @@ router.delete("/api/deleteNews/:id", authJwt, (req, res) => {
     });
 });
 
-router.get("/api/getUsers", authJwt, (req, res) => {
-  //получение списка пользователей. Необходимо вернуть список всех пользоватлей из базы данных.
-});
-
-router.put("/api/updateUserPermission/:id", authJwt, (req, res) => {
-  //обновление существующей записи о разрешениях конкретного пользователя.
-});
-
+// helpers
 const composeNews = async news => {
   const newsPromises = news.map(el => {
     return User.findOne({ id: el.userId }).then(user => {

@@ -93,5 +93,94 @@ module.exports = {
         res.status(200).json(user);
       }
     })(req, res, next);
+  },
+  getUsers: (req, res, next) => {
+    //получение списка пользователей. Необходимо вернуть список всех пользоватлей из базы данных.
+    User.find({})
+      .then(users => {
+        return res.status(200).json(users);
+      })
+      .catch(err => {
+        return res.status(400).json({
+          error: `Произошла ошибка при выборке новостей: ${err.message}`
+        });
+      });
+  },
+  updateUser: (req, res, next) => {
+    //обновление информации о пользователе. Необходимо вернуть объект обновленного пользователя.
+    const data = req.body;
+    const newData = userUpateData(data);
+    console.log(req.body);
+    // Если запрос на смену пароля
+    //console.log("cp = ", checkPassword(data));
+    checkPassword(data, newData)
+      .then(checkedData => {
+        console.log("cd = ", checkedData);
+        console.log("id = ", req.body.id);
+        User.findOneAndUpdate({ id: req.body.id }, checkedData).then(() => {
+          User.findOne({ id: req.body.id }).then(user => {
+            res.status(200).json(user);
+          });
+        });
+      })
+      .catch(err => {
+        return res
+          .status(400)
+          .json({ error: `Произошла ошибка: ${err.message}` });
+      });
+    /*if (data.password && data.oldPassword) {
+      // Проверяем, корректный ли текущий пароль
+      User.findOne({ id: data.id }).then(user => {
+        if (user.validPassword(data.oldPassword)) {
+          // Обновляем данные
+          const salt = await bcrypt.genSalt(10);
+          newData.password = await bcrypt.hash(data.password, salt);
+        } else {
+          return res.status(400).json({ error: `Неправильный пароль!` });
+        }
+      });
+    }*/
+    /*User.findOneAndUpdate({ id: req.body.id }, data)
+      .then(() => {
+        User.findOne({ id: req.body.id }).then(user => {
+          res.status(200).json(user);
+        });
+      })
+      .catch(err => {
+        return res
+          .status(400)
+          .json({ error: `Произошла ошибка: ${err.message}` });
+      });*/
   }
+};
+
+const userUpateData = data => {
+  let obj = {};
+  for (let key in data) {
+    if (key !== "id" && key !== "oldPassword" && key !== "password") {
+      obj[key] = data[key];
+    }
+  }
+  console.log(obj);
+  return obj;
+};
+
+const checkPassword = async (data, newData) => {
+  return await new Promise((resolve, reject) => {
+    if (data.password && data.oldPassword) {
+      // Проверяем, корректный ли текущий пароль
+      return User.findOne({ id: data.id }).then(async user => {
+        if (user.validPassword(data.oldPassword)) {
+          // Обновляем данные
+          const salt = await bcrypt.genSalt(10);
+          newData.password = await bcrypt.hash(data.password, salt);
+          resolve(newData);
+        } else {
+          reject(new Error(`Неправильный пароль!`));
+        }
+      });
+    } else {
+      resolve(newData);
+    }
+  });
 };
