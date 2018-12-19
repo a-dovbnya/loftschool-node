@@ -1,5 +1,4 @@
-const { auth, register } = require("../mock");
-
+//const { auth, register } = require("../mock");
 const bcrypt = require("bcryptjs");
 const uuidv4 = require("uuid-v4");
 const jwts = require("jwt-simple");
@@ -53,7 +52,6 @@ module.exports = {
     });
   },
   login: (req, res, next) => {
-    console.log("body = ", req.body);
     passport.authenticate("local", (err, user) => {
       if (err) {
         return next(err);
@@ -71,13 +69,29 @@ module.exports = {
             path: "/"
           });
         }
-        console.log("req.isAuthenticated() = ", req.isAuthenticated());
+        // В любом случае ставим пользователю куку с токеном для jwt авторизации
+        res.cookie("jwt", user.access_token, {
+          httpOnly: true,
+          expires: new Date(Date.now() + 60 * 60 * 24 * 1000),
+          path: "/"
+        });
         return res.status(200).json(user);
       }
     })(req, res, next);
   },
-  authFromToken: (req, res) => {
-    console.log(req.body);
-    res.status(200).json(auth);
+  authFromToken: (req, res, next) => {
+    passport.authenticate("jwt", { session: false }, function(err, user) {
+      if (err) {
+        return next(err);
+      }
+      if (!user) {
+        return res.status(400).json({
+          error: `Пользователь с таким токеном не найден`
+        });
+      }
+      if (user) {
+        res.status(200).json(user);
+      }
+    })(req, res, next);
   }
 };

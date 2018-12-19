@@ -7,14 +7,17 @@ const secret = require("./config.json").secret;
 
 const ExtractJWT = passportJWT.ExtractJwt;
 const Strategy = passportJWT.Strategy;
+
 const params = {
   secretOrKey: secret,
-  //jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+  //jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
   jwtFromRequest: function(req) {
-    console.log("extractor = ");
     var token = null;
-    if (req && req.cookies) {
-      token = req.cookies["jwt"];
+    if ((req && req.cookies) || req.headers) {
+      token =
+        req.cookies["jwt"] ||
+        req.cookies["access_token"] ||
+        req.headers["access_token"];
     }
     return token;
   }
@@ -38,14 +41,12 @@ passport.use(
 
 passport.use(
   new Strategy(params, function(payload, done) {
-    console.log("passport strategy = ", payload);
-    User.find({ id: payload.id })
+    User.findOne({ id: payload.id })
       .then(user => {
-        console.log("user = ", user);
         if (!user) {
           return done(new Error("User not found"));
         }
-        return done(null, { id: user.id });
+        return done(null, user);
       })
       .catch(err => done(err));
   })
