@@ -11,6 +11,12 @@ const router = require("./routes/api/v1.0/");
 const app = express();
 const path = require("path");
 
+const chat = require("./chat");
+const http = require("http");
+const server = http.createServer(app);
+const io = require("socket.io").listen(server);
+chat(io);
+
 app.use(cookieParser());
 /*app.use(
   session({

@@ -71,12 +71,7 @@ const userSchema = new Schema({
   }
 });
 
-/* userSchema.methods.setPassword = function(password) {
-  this.hash = bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
-};*/
-
 userSchema.methods.validPassword = function(password) {
-  console.log("valid password = ", bCrypt.compareSync(password, this.password));
   return bCrypt.compareSync(password, this.password);
 };
 

@@ -1,13 +1,13 @@
-//const { auth, register } = require("../mock");
 const bcrypt = require("bcryptjs");
 const uuidv4 = require("uuid-v4");
 const jwts = require("jwt-simple");
 const passport = require("passport");
 const User = require("../models/user");
 const secret = require("../config/config.json").secret;
+const { uploadImage } = require("../libs/uploadImage");
 
 module.exports = {
-  saveNewUser: async (req, res) => {
+  saveNewUser: (req, res) => {
     const data = req.body;
 
     if (!data.username || !data.password) {
@@ -109,16 +109,11 @@ module.exports = {
   updateUser: (req, res, next) => {
     //обновление информации о пользователе. Необходимо вернуть объект обновленного пользователя.
     const data = req.body;
-    const newData = userUpateData(data);
-    console.log(req.body);
-    // Если запрос на смену пароля
-    //console.log("cp = ", checkPassword(data));
-    checkPassword(data, newData)
+
+    getUpdateUserData(data)
       .then(checkedData => {
-        console.log("cd = ", checkedData);
-        console.log("id = ", req.body.id);
-        User.findOneAndUpdate({ id: req.body.id }, checkedData).then(() => {
-          User.findOne({ id: req.body.id }).then(user => {
+        User.findOneAndUpdate({ id: data.id }, checkedData).then(() => {
+          User.findOne({ id: data.id }).then(user => {
             res.status(200).json(user);
           });
         });
@@ -128,59 +123,92 @@ module.exports = {
           .status(400)
           .json({ error: `Произошла ошибка: ${err.message}` });
       });
-    /*if (data.password && data.oldPassword) {
-      // Проверяем, корректный ли текущий пароль
-      User.findOne({ id: data.id }).then(user => {
-        if (user.validPassword(data.oldPassword)) {
-          // Обновляем данные
-          const salt = await bcrypt.genSalt(10);
-          newData.password = await bcrypt.hash(data.password, salt);
-        } else {
-          return res.status(400).json({ error: `Неправильный пароль!` });
-        }
+  },
+  saveUserImage: (req, res, next) => {
+    //сохранение изображения пользователя. Необходимо вернуть объект со свойством path, которое хранит путь до сохраненного изображения
+    uploadImage(req)
+      .then(path => {
+        console.log("img path = ", path);
+        User.findOneAndUpdate({ id: req.params.id }, { image: path }).then(
+          () => {
+            res.status(200).json({ path: path });
+          }
+        );
+      })
+      .catch(err => {
+        console.log(`ошибка при загрузке изображения ${err.message}`);
       });
-    }*/
-    /*User.findOneAndUpdate({ id: req.body.id }, data)
-      .then(() => {
-        User.findOne({ id: req.body.id }).then(user => {
-          res.status(200).json(user);
+  },
+  updateUserPermission: (req, res, next) => {
+    //обновление существующей записи о разрешениях конкретного пользователя.
+    const data = req.body;
+    const id = req.params.id;
+    User.findOne({ permissionId: id })
+      .then(user => {
+        const newPermission = {
+          chat: { ...user.permission.chat, ...data.permission.chat },
+          news: { ...user.permission.news, ...data.permission.news },
+          setting: { ...user.permission.setting, ...data.permission.setting }
+        };
+
+        User.findOneAndUpdate(
+          { permissionId: id },
+          { permission: newPermission }
+        ).then(() => {
+          User.findOne({ permissionId: id }).then(user => {
+            res.status(200).json(user.permission);
+          });
         });
       })
       .catch(err => {
         return res
           .status(400)
           .json({ error: `Произошла ошибка: ${err.message}` });
-      });*/
+      });
+  },
+  deleteUser: (req, res, next) => {
+    //удаление пользователя
+    User.findOneAndRemove({ id: req.params.id })
+      .then(() => {
+        User.find({}).then(users => {
+          return res.status(200).json(users);
+        });
+      })
+      .catch(err => {
+        return res.status(400).json({
+          error: `Произошла ошибка при удалении пользователя ${err.message}`
+        });
+      });
   }
 };
 
-const userUpateData = data => {
+const userUpdateData = data => {
+  /* Создает новый объект
+   ** с данными для обновления информации о пользователе
+   */
   let obj = {};
   for (let key in data) {
     if (key !== "id" && key !== "oldPassword" && key !== "password") {
       obj[key] = data[key];
     }
   }
-  console.log(obj);
   return obj;
 };
 
-const checkPassword = async (data, newData) => {
-  return await new Promise((resolve, reject) => {
-    if (data.password && data.oldPassword) {
-      // Проверяем, корректный ли текущий пароль
-      return User.findOne({ id: data.id }).then(async user => {
-        if (user.validPassword(data.oldPassword)) {
-          // Обновляем данные
-          const salt = await bcrypt.genSalt(10);
-          newData.password = await bcrypt.hash(data.password, salt);
-          resolve(newData);
-        } else {
-          reject(new Error(`Неправильный пароль!`));
-        }
-      });
-    } else {
-      resolve(newData);
+const getUpdateUserData = async data => {
+  const newData = userUpdateData(data);
+
+  if (data.password && data.oldPassword) {
+    /* Если был передан пароль, проверяем,
+     ** корректен ли старый пароль для текущего пользователя
+     */
+    const currentUser = await User.findOne({ id: data.id });
+
+    if (!currentUser.validPassword(data.oldPassword)) {
+      throw new Error(`Неправильный пароль!`);
     }
-  });
+    const salt = await bcrypt.genSalt(10);
+    newData.password = await bcrypt.hash(data.password, salt);
+  }
+  return newData;
 };

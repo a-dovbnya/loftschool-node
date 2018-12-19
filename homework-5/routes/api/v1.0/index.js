@@ -2,15 +2,11 @@ const express = require("express");
 const router = express.Router();
 const uuidv4 = require("uuid-v4");
 const userController = require("../../../controllers/user.js");
-//const db = require("../../../../models/db");
 const News = require("../../../models/news");
 const User = require("../../../models/user");
 
 const passport = require("passport");
 const authJwt = passport.authenticate("jwt", { session: false });
-
-// mock
-//const { auth, register, getNews } = require("../../../mock");
 
 // На все get-запросы отдавать index.html
 router.get("/", (req, res) => {
@@ -20,19 +16,15 @@ router.get("/", (req, res) => {
 router.post("/api/saveNewUser", userController.saveNewUser);
 router.post("/api/login", userController.login);
 router.post("/api/authFromToken", userController.authFromToken);
-
 router.get("/api/getUsers", authJwt, userController.getUsers);
 router.put("/api/updateUser/:id", authJwt, userController.updateUser);
-
-router.delete("/api/deleteUser/:id", authJwt, (req, res) => {
-  //удаление пользователя
-});
-router.post("/api/saveUserImage/:id", authJwt, (req, res) => {
-  //сохранение изображения пользователя. Необходимо вернуть объект со свойством path, которое хранит путь до сохраненного изображения
-});
-router.put("/api/updateUserPermission/:id", authJwt, (req, res) => {
-  //обновление существующей записи о разрешениях конкретного пользователя.
-});
+router.post("/api/saveUserImage/:id", authJwt, userController.saveUserImage);
+router.put(
+  "/api/updateUserPermission/:id",
+  authJwt,
+  userController.updateUserPermission
+);
+router.delete("/api/deleteUser/:id", authJwt, userController.deleteUser);
 
 // Новости
 router.get("/api/getNews", authJwt, (req, res, next) => {
