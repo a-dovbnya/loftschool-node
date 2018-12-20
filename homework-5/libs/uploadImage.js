@@ -1,7 +1,6 @@
 const formidable = require("formidable");
 const fs = require("fs");
 const path = require("path");
-//const { validate } = require("./uploadValidation");
 const uploadDir = "upload";
 
 module.exports.uploadImage = req =>
