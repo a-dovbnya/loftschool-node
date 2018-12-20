@@ -18,45 +18,6 @@ const io = require("socket.io").listen(server);
 chat(io);
 
 app.use(cookieParser());
-/*app.use(
-  session({
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
-    secret: "kye-secret",
-    key: "session-key",
-    cookie: {
-      path: "/",
-      httpOnly: true,
-      maxAge: 30 * 60 * 1000
-    },
-    saveUninitialized: false,
-    resave: true,
-    ephemeral: true,
-    rolling: true
-  })
-);*/
-// connection db
-//require("./models");
-
-//app.use(cookieParser());
-/* app.use(
-  session({
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
-    secret: "kye-secret",
-    key: "session-key",
-    cookie: {
-      path: "/",
-      httpOnly: true,
-      maxAge: 30 * 60 * 1000
-    },
-    saveUninitialized: false,
-    resave: true,
-    ephemeral: true,
-    rolling: true
-  })
-);
-
-
-require("./config/config-passport"); */
 
 // static
 app.use(express.json({ type: "text/plain" }));
@@ -90,6 +51,6 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, function() {
+server.listen(PORT, function() {
   console.log(`Server running. Use our API on port: ${PORT}`);
 });
