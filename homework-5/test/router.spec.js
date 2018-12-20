@@ -1,39 +1,46 @@
 process.env.BD = "testing";
 
-const mongoose = require("mongoose");
 const User = require("../models/user");
 const chai = require("chai");
 const should = chai.should();
 const chaiHttp = require("chai-http");
 const server = require("../app");
-const secret = require("../config/config.json").secret;
-//const issueToken = require('../helpers/issueToken');
+
 chai.use(chaiHttp);
-describe("/GET main page", () => {
-  it("test status code of main page", done => {
-    chai
-      .request(server)
-      .get("/")
-      .end((err, res) => {
-        res.should.have.status(200);
-        //res.text.should.be.a("string");
-        //res.text.length.should.be.eql(0);
-        done();
-      });
+
+describe("Test App", () => {
+  beforeEach(function(done) {
+    User.deleteMany({}, err => {
+      done();
+    });
   });
-});
-/*describe("User", () => {
-  describe("/Get cats", () => {
-    it("Получить всех пользователей из БД", done => {
+  describe("Users", () => {
+    it("Save New User", done => {
       chai
         .request(server)
-        .get("/api/getUsers")
+        .post("/api/saveNewUser")
+        .send({ username: "test", password: "12345" })
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a("array");
-          res.body.length.should.be.eql(0);
+          res.should.have.status(201);
+          res.body.should.property("access_token");
+          res.body.access_token.should.be.a("string");
+          res.body.should.property("id");
+          res.body.should.property("password");
+          res.body.should.property("permission");
           done();
         });
     });
   });
-});*/
+
+  describe("get main page", () => {
+    it("test get main page", done => {
+      chai
+        .request(server)
+        .get("/")
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+        });
+    });
+  });
+});
