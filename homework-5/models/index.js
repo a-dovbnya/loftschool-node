@@ -1,16 +1,27 @@
 const mongoose = require("mongoose");
+let uri;
+require("dotenv").config();
+
+if (process.env.DB === "testing") {
+  uri = process.env.uriDBTest;
+} else {
+  uri = process.env.uriDB;
+}
+
+mongoose.set("useFindAndModify", false);
+mongoose.set("useCreateIndex", true);
 
 mongoose.Promise = global.Promise;
 
 mongoose.connect(
-  "mongodb://root:pass12345@ds135974.mlab.com:35974/loftmainproject",
+  uri,
   { useNewUrlParser: true }
 );
 
 mongoose.connection.on("connected", () => {
-  console.log(
-    "Mongoose connection open mongodb://root:pass12345@ds135974.mlab.com:35974/loftmainproject"
-  );
+  if (process.env.DB !== "testing") {
+    console.log(`Mongoose connection open ${uri}`);
+  }
 });
 
 mongoose.connection.on("error", err => {

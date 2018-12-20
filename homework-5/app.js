@@ -15,7 +15,6 @@ chat(io);
 
 app.use(cookieParser());
 
-// static
 app.use(express.json({ type: "text/plain" }));
 app.use(express.static(path.join(__dirname, "dist")));
 app.use(bodyParser.json());
@@ -41,6 +40,10 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
-server.listen(PORT, function() {
-  console.log(`Server running. Use our API on port: ${PORT}`);
-});
+if (require.main === module) {
+  server.listen(PORT, function() {
+    console.log(`Server running. Use our API on port: ${PORT}`);
+  });
+} else {
+  module.exports = server;
+}
